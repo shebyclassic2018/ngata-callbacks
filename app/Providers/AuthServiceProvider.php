@@ -22,12 +22,14 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
+
+
     public function boot()
     {
         $this->registerPolicies();
-        $timeout = 600;
+        $timeout = 86400;
         Passport::routes();
-        Passport::hashClientSecrets();
+        // Passport::hashClientSecrets();
         Passport::tokensExpireIn(now()->addSeconds($timeout));
         Passport::refreshTokensExpireIn(now()->addSeconds($timeout));
         Passport::personalAccessTokensExpireIn(now()->addSeconds($timeout));

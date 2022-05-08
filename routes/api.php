@@ -2,10 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Payment\DisbursementController;
-use App\Http\Controllers\Payment\PaymentController;
 use App\Models\Payment\AppointmentPayment;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Callback\AirtelController;
+use App\Http\Controllers\Callback\VodacomController;
+use App\Http\Controllers\Callback\CellulantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,23 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('login', [UserController::class, 'login']);
+Route::post('cellulant-callback', [CellulantController::class, 'CallbackReceiver'])->name('cellulant');
+Route::post('vodacom-callback', [VodacomController::class, 'CallbackReceiver'])->name('vodacom');
+Route::post('airtel-callback', [AirtelController::class, 'CallbackReceiver'])->name('airtel');
 
-Route::post('decrypt', [UserController::class, 'decrypt']);
-Route::post('apiLogin', [UserController::class, 'apiLogin']);
-Route::post('getNotification', [UserController::class, 'getNotification']);
-Route::post('/pending-payment', [PaymentController::class, 'pendingAppointment']);
-Route::post('/paid-payment', [PaymentController::class, 'paidAppointment']);
-
-Route::group(['as' => 'txnId-details.', 'prefix' => 'txnId-details'], function() {
-    Route::post('/{merchantId}', [PaymentController::class, 'getAppointmentByMerchantId']);
-});
-
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::post('test', [UserController::class, 'test']);
-    Route::get('uid/{id}', [UserController::class, 'getUID']);
-    Route::post('/disbursement', [DisbursementController::class, 'disbursement'])->name('disbursement');
-});
 
 
 

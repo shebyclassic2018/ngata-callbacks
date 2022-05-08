@@ -1,0 +1,19 @@
+// Icons
+// -------------------------
+
+.icons8-ok:before,
+.icons8-ok-2:before,
+[data-icons8]:before {
+  @include icons8-font;
+}
+
+[data-icons8]:before {
+  content: attr(data-icons8);
+}
+
+.icons8-ok:before {
+  content: $icons8-var-ok;
+}
+.icons8-ok-2:before {
+  content: $icons8-var-ok-2;
+}
