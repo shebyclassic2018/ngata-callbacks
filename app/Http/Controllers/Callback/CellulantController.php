@@ -47,9 +47,15 @@ class CellulantController extends Controller
     {
          $decodedResponse = $req->all();
         if ($req->requestStatusCode == 178) {
-            $data = array(
+
+            foreach($req->payments as $row) {
+                $payment_date = $row['datePaymentReceived'];
+            }
+            
+             $data = array(
                 'status_code' => 183,
-                "tpconversation_id" =>  $req->merchantTransactionID
+                "tpconversation_id" =>  $req->merchantTransactionID,
+                'payment_date' => $payment_date
             );
             $response = array(
                 "statusCode" => 183,
